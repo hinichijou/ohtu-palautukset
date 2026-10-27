@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 
@@ -53,14 +53,7 @@ class TestStatisticsService(unittest.TestCase):
         with self.assertRaises(IndexError):
             self.stats.top(10)
 
-    def test_kahden_eniten_pisteita_tehneiden_pelaajien_haku(self):
-        eniten_pisteita_tehneet_pelaajat = self.stats.top(1)
-        self.assertEqual(len(eniten_pisteita_tehneet_pelaajat), 2)
-
-        self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[0]), str(Player("Gretzky", "EDM", 35, 89)))
-        self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[1]), str(Player("Lemieux", "PIT", 45, 54)))
-
-    def test_viiden_eniten_pisteita_tehneiden_pelaajien_haku(self):
+    def test_viiden_eniten_pisteita_tehneen_pelaajan_haku(self):
         eniten_pisteita_tehneet_pelaajat = self.stats.top(4)
         self.assertEqual(len(eniten_pisteita_tehneet_pelaajat), 5)
 
@@ -70,3 +63,41 @@ class TestStatisticsService(unittest.TestCase):
         self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[3]), str(Player("Kurri",   "EDM", 37, 53)))
         self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[4]), str(Player("Semenko", "EDM", 4, 12)))
 
+    def test_kahden_eniten_pisteita_tehneen_pelaajan_haku(self):
+        eniten_pisteita_tehneet_pelaajat = self.stats.top(1)
+        self.assertEqual(len(eniten_pisteita_tehneet_pelaajat), 2)
+
+        self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[0]), str(Player("Gretzky", "EDM", 35, 89)))
+        self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[1]), str(Player("Lemieux", "PIT", 45, 54)))
+
+        # Testi eksplisiittisellä parametrilla
+        eniten_pisteita_tehneet_pelaajat = self.stats.top(1, SortBy.POINTS)
+        self.assertEqual(len(eniten_pisteita_tehneet_pelaajat), 2)
+
+        self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[0]), str(Player("Gretzky", "EDM", 35, 89)))
+        self.assertEqual(str(eniten_pisteita_tehneet_pelaajat[1]), str(Player("Lemieux", "PIT", 45, 54)))
+
+
+    def test_kolmen_eniten_maaleja_tehneen_pelaajan_haku(self):
+        eniten_maaleja_tehneet_pelaajat = self.stats.top(2, SortBy.GOALS)
+        self.assertEqual(len(eniten_maaleja_tehneet_pelaajat), 3)
+
+        self.assertEqual(str(eniten_maaleja_tehneet_pelaajat[0]), str(Player("Lemieux", "PIT", 45, 54)))
+        self.assertEqual(str(eniten_maaleja_tehneet_pelaajat[1]), str(Player("Yzerman", "DET", 42, 56)))
+        self.assertEqual(str(eniten_maaleja_tehneet_pelaajat[2]), str(Player("Kurri",   "EDM", 37, 53)))
+
+    def test_neljan_eniten_syottoja_antaneen_pelaajan_haku(self):
+        eniten_syottoja_antaneet_pelaajat = self.stats.top(3, SortBy.ASSISTS)
+        self.assertEqual(len(eniten_syottoja_antaneet_pelaajat), 4)
+
+        self.assertEqual(str(eniten_syottoja_antaneet_pelaajat[0]), str(Player("Gretzky", "EDM", 35, 89)))
+        self.assertEqual(str(eniten_syottoja_antaneet_pelaajat[1]), str(Player("Yzerman", "DET", 42, 56)))
+        self.assertEqual(str(eniten_syottoja_antaneet_pelaajat[2]), str(Player("Lemieux", "PIT", 45, 54)))
+        self.assertEqual(str(eniten_syottoja_antaneet_pelaajat[3]), str(Player("Kurri",   "EDM", 37, 53)))
+
+    def test_virheellinen_sortby_parametri_palauttaa_eniten_pisteita_tehneet(self):
+        pelaajat = self.stats.top(1, 5)
+        self.assertEqual(len(pelaajat), 2)
+
+        self.assertEqual(str(pelaajat[0]), str(Player("Gretzky", "EDM", 35, 89)))
+        self.assertEqual(str(pelaajat[1]), str(Player("Lemieux", "PIT", 45, 54)))
