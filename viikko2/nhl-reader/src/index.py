@@ -21,7 +21,7 @@ def main():
         nationality = Prompt.ask("Nationality", choices=playerreader.get_nationalities())
         players = stats.top_scorers_by_nationality(nationality)
 
-        table = Table(title=f"[italic]Season {season} players from {nationality}:\n")
+        table = Table(title=f"Season {season} players from {nationality}:")
         table.add_column("Name", style="cyan", no_wrap=True)
         table.add_column("Team", style="magenta")
         table.add_column("Goals", justify="right", style="green")
