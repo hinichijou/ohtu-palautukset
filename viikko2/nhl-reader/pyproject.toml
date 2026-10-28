@@ -3,4 +3,6 @@ name = "nhl-reader"
 version = "0.1.0"
 description = ""
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "requests>=2.34.2",
+]
