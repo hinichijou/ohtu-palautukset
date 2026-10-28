@@ -6,6 +6,7 @@ def main():
     response = requests.get(url).json()
 
     players = [Player(p) for p in response if p["nationality"] == "FIN"]
+    players.sort(key = lambda p: p.points, reverse = True)
 
     print("Players from FIN:\n")
 
