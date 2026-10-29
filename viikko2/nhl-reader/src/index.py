@@ -20,8 +20,8 @@ def get_stats(season: str):
 
     return stats
 
-def print_table(console: Console, players: list, season: str, nationality: str):
-    table = Table(title=f"Season {season} players from {nationality}:")
+def print_table(console: Console, players: list, season: str, group: str):
+    table = Table(title=f"Season {season} players from {group}:")
     table.add_column("Name", style="cyan", no_wrap=True)
     table.add_column("Team", style="magenta")
     table.add_column("Goals", justify="right", style="green")
@@ -34,6 +34,21 @@ def print_table(console: Console, players: list, season: str, nationality: str):
     console.print(table)
 
 
+def get_players(stats: PlayerStats):
+    search_type = Prompt.ask(
+        "Search players by", choices=["nationality", "team"]
+    )
+
+    if search_type == "nationality":
+        group = Prompt.ask("Nationality", choices=stats.get_nationalities())
+        players = stats.top_scorers_by_nationality(group)
+    else:
+        group = Prompt.ask("Team", choices=stats.get_teams())
+        players = stats.top_scorers_by_team(group)
+
+    return group, players
+
+
 def main():
     console = Console()
 
@@ -41,10 +56,8 @@ def main():
     stats = get_stats(season)
 
     while True:
-        nationality = Prompt.ask("Nationality", choices=stats.get_nationalities())
-        players = stats.top_scorers_by_nationality(nationality)
-
-        print_table(console, players, season, nationality)
+        group, players = get_players(stats)
+        print_table(console, players, season, group)
 
 if __name__ == "__main__":
     main()
