@@ -9,7 +9,8 @@
 
 ## Environment and commands
 
-- This is an `uv` project. Use Python 3.14 or newer as required by [pyproject.toml](pyproject.toml), through the repository's `uv` environment.
+- This is an `uv` project. Use Python 3.14 or newer as required by [pyproject.toml](pyproject.toml), through the project's `.venv` environment; do not use a system-wide Python or Robot Framework installation.
+- Run commands from the repository root. Before using bare commands such as `python` or `robot`, activate `.venv` (`source .venv/Scripts/activate` in bash or `.venv\Scripts\Activate.ps1` in PowerShell). Commands prefixed with `uv run` use the project's `.venv` without requiring manual activation.
 - Install the declared dependencies with `uv sync`. Add runtime libraries with `uv add <package>` and development/test libraries with `uv add --dev <package>`; do not install project dependencies directly with `pip`.
 - First start the app from the repository root with `uv run python src/index.py` and leave it running; it serves on `http://localhost:5001`.
 - After the app is running, open another terminal at the repository root and run the acceptance suite with `uv run robot src/tests`.

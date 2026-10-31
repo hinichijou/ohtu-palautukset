@@ -7,8 +7,15 @@ Test Setup      Reset Application Create User And Go To Register Page
 *** Test Cases ***
 Register With Valid Username And Password
     Set Username  pekka
-    Set Password  pekka123
-    Set Password Confirmation  pekka123
+    Set Password  kalle123
+    Set Password Confirmation  kalle123
+    Click  button >> text=Register
+    Register Should Succeed
+
+Register With Password Containing Special Character
+    Set Username  pekka
+    Set Password  kalle#abc
+    Set Password Confirmation  kalle#abc
     Click  button >> text=Register
     Register Should Succeed
 
@@ -25,6 +32,27 @@ Register With Valid Username And Too Short Password
     Set Password Confirmation  pekka12
     Click  button >> text=Register
     Register Should Fail With Message  Password must be at least 8 characters long
+
+Register With Mismatching Password Confirmation
+    Set Username  pekka
+    Set Password  pekka123
+    Set Password Confirmation  pekka456
+    Click  button >> text=Register
+    Register Should Fail With Message  Passwords do not match
+
+Register With Password Containing Only Lowercase Letters
+    Set Username  pekka
+    Set Password  kallekalle
+    Set Password Confirmation  kallekalle
+    Click  button >> text=Register
+    Register Should Fail With Message  Password must contain at least one number or special character
+
+Register With Password Containing Only Uppercase Letters
+    Set Username  pekka
+    Set Password  KalleKalle
+    Set Password Confirmation  KalleKalle
+    Click  button >> text=Register
+    Register Should Fail With Message  Password must contain at least one number or special character
 
 Register With Username That Is Already In Use
     Set Username  kalle
