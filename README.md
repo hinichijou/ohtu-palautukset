@@ -1,5 +1,5 @@
 # ohtu-palautukset
 
-https://github.com/hinichijou/ohtuvarasto
+Ohtuvarasto: https://github.com/hinichijou/ohtuvarasto
 
-https://github.com/hinichijou/ohtulaskuri
+Webcounter repositorio: https://github.com/hinichijou/ohtulaskuri
