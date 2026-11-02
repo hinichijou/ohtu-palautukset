@@ -2,16 +2,16 @@ from tuote import Tuote
 
 class Ostoskori:
     def __init__(self):
-        pass
+        self._tuote_lisatty = False
 
     def tavaroita_korissa(self):
-        return 0
+        return 1 if self._tuote_lisatty else 0
 
     def hinta(self):
         return 0
 
     def lisaa_tuote(self, lisattava: Tuote):
-        pass
+        self._tuote_lisatty = True
 
     def poista_tuote(self, poistettava: Tuote):
         pass

@@ -17,6 +17,7 @@
 - Do not edit tests unless the task explicitly asks for test changes.
 - Keep changes small and TDD-oriented: update or add a failing test first when implementing missing cart behavior, then make the smallest implementation change that passes it.
 - Always implement the absolute minimum code required to make the tests pass.
+- Prefer hardcoded values or narrowly scoped behavior when they satisfy the current test; do not solve the general case until a test requires it.
 - Do not add runtime dependencies without updating [pyproject.toml](pyproject.toml).
 
 ## Style
