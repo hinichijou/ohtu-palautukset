@@ -1,0 +1,11 @@
+### Poistiko agentti toisteisuuden mielestäsi järkevästi? Onko testikoodi nyt helpommin luettavaa?
+
+Agentti poisti toisteisuuden mielestäni järkevästi ja ohjepromptin mukaisesti. Yksittäisen tapauksen testikoodi sisältää nyt vain ostotapahtuman (alkaen kauppa.aloita_asiointi() kutsusta) ja toisteinen testiolioiden luominen tapahtuu setUp-metodissa. Muutosten jälkeen on helpompi nähdä mitä tapaus testaa, miten, ja mitä odotetut palautusarvot ovat. Agentin tekemien testien arviointi -kappaleen perusteella rikoin vielä jokaisen testin ja kokeilin, että ne eivät mene läpi väärillä arvoilla. Kaikki testit toimivat odotusten mukaisesti.
+
+### Muuttiko agentti testien toiminnallisuutta, esim. poistiko tai heikensikö se tarkistuksia (assert_called_with vs. assert_called)?
+
+Agentti ei muuttanut testien toiminnallisuutta eikä poistanut tai heikentänyt tarkistuksia. Kaikki `assert_called_with` -kutsut pysyivät `assert_called_with` -kutsuina ja kaikki `assert_called` -kutsut pysyivät `assert_called` -kutsuina. Promptasin agentille heti ensimmäisessä promptissa ettei testien toiminnallisuus tule muuttua eikä testien tule mennä läpi muilla kuin odotetuilla arvoilla. Nähdäkseni agentti teki muutokset tätä promptia noudattaen.
+
+### Jouduitko korjaamaan agentin tekemiä muutoksia itse tai pyytämään siltä muutoksia? Mitä ja miksi?
+
+Testitapuksessa, jossa toinen ostos on varastossa ja toinen ei agentti alun perin ylikirjoitti `varasto_saldo` -metodin testimetodin sisällä, jossa se laittoi tuotteen id:llä 2 saldoksi 0. Pyysin sitä mielummin lisäämään [kolmannen tuotteen, jonka saldo on 0 id:llä 3](https://github.com/hinichijou/ohtu-palautukset/commit/4453a6007145596f85a2698d613608fd1e20a831), koska mielestäni tämä teki testikoodista siistimmän näköisen ja tuntui järkevältä. Agentti alun perin laittoi uuden tuotteen nimeksi "puuro" ja hinnaksi 2 (ts. kopioi tuotteen id:llä 2 id:tä lukuunottamatta), pyysin sitä laittamaan tuotteelle eri nimen ja hinnan, jotta testituotteet ovat helpommin eroteltavissa. Agentin alkuperäinen ratkaisu oli tässä tapauksessa konservatiivinen, eli metodin ylikirjoitus, koska toteutus ei ollut täsmälleen sama, mikä ei ehkä välttämättä ole huono asia. Mielestäni hyvä esimerkki siitä, että tuotos on hyvä tarkistaa ja prompteja tarkentaa ja iteroida tarvittaessa.
