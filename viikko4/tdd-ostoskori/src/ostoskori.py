@@ -25,6 +25,8 @@ class Ostoskori:
         self._tavaroiden_maara -= 1
         self._hinta -= poistettava.hinta()
         self._ostokset[0].muuta_lukumaaraa(-1)
+        if self._ostokset[0].lukumaara() == 0:
+            self._ostokset.pop(0)
 
     def tyhjenna(self):
         pass
