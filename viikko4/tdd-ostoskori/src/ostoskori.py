@@ -17,6 +17,7 @@ class Ostoskori:
         self._tavaroiden_maara += 1
         self._hinta += lisattava.hinta()
         if self._ostokset and self._ostokset[0].tuote == lisattava:
+            self._ostokset[0].muuta_lukumaaraa(1)
             return
         self._ostokset.append(Ostos(lisattava))
 
