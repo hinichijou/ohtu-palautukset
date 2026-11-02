@@ -7,7 +7,7 @@ class TestKauppa(unittest.TestCase):
     def setUp(self):
         self.pankki_mock = Mock()
         self.viitegeneraattori_mock = Mock()
-        self.viitegeneraattori_mock.uusi.return_value = 42
+        self.viitegeneraattori_mock.uusi.side_effect = [42, 43, 44]
 
         self.varasto_mock = Mock()
 
@@ -100,3 +100,26 @@ class TestKauppa(unittest.TestCase):
                 call(ANY, ANY, ANY, ANY, 2),
             ],
         )
+
+    def test_uusi_viite_jokaiselle_maksutapahtumalle(self):
+            self.kauppa.aloita_asiointi()
+            self.kauppa.lisaa_koriin(1)
+            self.kauppa.tilimaksu("pekka", "12345")
+
+            self.kauppa.aloita_asiointi()
+            self.kauppa.lisaa_koriin(1)
+            self.kauppa.tilimaksu("hillevi", "22345")
+
+            self.kauppa.aloita_asiointi()
+            self.kauppa.lisaa_koriin(2)
+            self.kauppa.tilimaksu("uolevi", "12355")
+
+            # varmistetaan, että maksuissa on käytetty eri viitteitä järjestyksessä 42, 43 ja 44
+            self.assertEqual(
+                self.pankki_mock.tilisiirto.call_args_list,
+                [
+                    call(ANY, 42, ANY, ANY, ANY),
+                    call(ANY, 43, ANY, ANY, ANY),
+                    call(ANY, 44, ANY, ANY, ANY),
+                ],
+            )
