@@ -1,4 +1,5 @@
 from tuote import Tuote
+from ostos import Ostos
 
 class Ostoskori:
     def __init__(self):
@@ -14,6 +15,7 @@ class Ostoskori:
     def lisaa_tuote(self, lisattava: Tuote):
         self._tavaroiden_maara += 1
         self._hinta += lisattava.hinta()
+        self._ostos = Ostos(lisattava)
 
     def poista_tuote(self, poistettava: Tuote):
         pass
@@ -22,4 +24,4 @@ class Ostoskori:
         pass
 
     def ostokset(self):
-        return [1]
+        return [self._ostos]
