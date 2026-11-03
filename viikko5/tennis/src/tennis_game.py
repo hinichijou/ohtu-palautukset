@@ -41,7 +41,7 @@ class TennisGame:
         if self.__player1.score == self.__player2.score:
             return self.get_tie_str()
 
-        # Special case: advantage. Either either player has the advantage or has won the game.
+        # Special case: advantage. Either player has the advantage or has won the game.
         if self.__player1.score > Score.Forty or self.__player2.score > Score.Forty:
             return self.get_advantage_str()
 
