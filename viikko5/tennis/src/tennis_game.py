@@ -26,11 +26,11 @@ class TennisGame:
         return "Deuce"
 
     def get_advantage_str(self):
-        has_advantage = max(self.__player1, self.__player2, key=lambda p: p.score)
+        leading_player = max(self.__player1, self.__player2, key=lambda p: p.score)
         difference = abs(self.__player1.score - self.__player2.score)
         return (
-            f"Advantage {has_advantage.name}" if difference == 1
-            else f"Win for {has_advantage.name}"
+            f"Advantage {leading_player.name}" if difference == 1
+            else f"Win for {leading_player.name}"
         )
 
     def get_score_str(self):
