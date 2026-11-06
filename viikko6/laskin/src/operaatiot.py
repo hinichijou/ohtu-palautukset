@@ -1,36 +1,58 @@
 from abc import ABC, abstractmethod
-class BinaariOperaatio(ABC):
+class Operaatio(ABC):
     def __init__(self, sovelluslogiikka, lue_syote):
-        self.lue_syote = lue_syote
-        self.sovelluslogiikka = sovelluslogiikka
+        self.__lue_syote = lue_syote
+        self._sovelluslogiikka = sovelluslogiikka
+        self._arvo = 0
+        # 6.2: Komento-olion tulee siis muistaa, mikä oli tuloksen arvo ennen komennon suoritusta,
+        # jotta se osaa palauttaa laskimen suoritusta edeltävään tilaan.
+        self._edeltavat_arvot = []
+
+    def _lue_arvo(self):
+        try:
+            self._arvo = int(self.__lue_syote())
+        except Exception:
+            return False
+
+        return True
 
     def suorita(self):
-        arvo = 0
+        edellinen_arvo = self._sovelluslogiikka.arvo()
+        tallenna = self._operaatio()
 
-        try:
-            arvo = int(self.lue_syote())
-        except Exception:
-            pass
+        if tallenna:
+            self._edeltavat_arvot.append(edellinen_arvo)
 
-        self.laske(arvo)
+        return tallenna
 
     @abstractmethod
-    def laske(self, arvo: int):
+    def _operaatio(self):
         pass
 
-class Summa(BinaariOperaatio):
-    def laske(self, arvo: int):
-        self.sovelluslogiikka.plus(arvo)
+    # 6.2: Periaatteena on toteuttaa jokaiseen komento-olioon metodi kumoa
+    def kumoa(self):
+        if len(self._edeltavat_arvot) > 0:
+            self._sovelluslogiikka.aseta_arvo(self._edeltavat_arvot.pop())
 
-class Erotus(BinaariOperaatio):
-    def laske(self, arvo: int):
-        self.sovelluslogiikka.miinus(arvo)
+class Summa(Operaatio):
+    def _operaatio(self):
+        if not self._lue_arvo():
+            return False
 
-class Nollaus(BinaariOperaatio):
-    def laske(self, arvo: int):
-        self.sovelluslogiikka.nollaa()
+        self._sovelluslogiikka.plus(self._arvo)
 
-class Kumoa(BinaariOperaatio):
-    # Tehtävä 6.1: Tässä tehtävässä ei tarvitse vielä toteuttaa kumoa-komennon toiminnallisuutta!
-    def laske(self, arvo: int):
-        pass
+        return True
+
+class Erotus(Operaatio):
+    def _operaatio(self):
+        if not self._lue_arvo():
+            return False
+
+        self._sovelluslogiikka.miinus(self._arvo)
+
+        return True
+
+class Nollaus(Operaatio):
+    def _operaatio(self):
+        self._sovelluslogiikka.nollaa()
+        return True
