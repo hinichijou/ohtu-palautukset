@@ -1,20 +1,22 @@
 from abc import ABC, abstractmethod
 
-class All:
-    def test(self, _):
-        return True
-
-class And:
+class EvaluateMultipleConditionsForPlayerOperation(ABC):
     def __init__(self, *matchers):
         self._matchers = matchers
 
+    @abstractmethod
+    def test(self, player):
+        pass
+
+class All(EvaluateMultipleConditionsForPlayerOperation):
+    def test(self, player):
+        return True
+
+class And(EvaluateMultipleConditionsForPlayerOperation):
     def test(self, player):
         return all(m.test(player) for m in self._matchers)
 
-class Or:
-    def __init__(self, *matchers):
-        self._matchers = matchers
-
+class Or(EvaluateMultipleConditionsForPlayerOperation):
     def test(self, player):
         return any(m.test(player) for m in self._matchers)
 
