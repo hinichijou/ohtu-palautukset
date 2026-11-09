@@ -9,11 +9,14 @@ class And:
         self._matchers = matchers
 
     def test(self, player):
-        for matcher in self._matchers:
-            if not matcher.test(player):
-                return False
+        return all(m.test(player) for m in self._matchers)
 
-        return True
+class Or:
+    def __init__(self, *matchers):
+        self._matchers = matchers
+
+    def test(self, player):
+        return any(m.test(player) for m in self._matchers)
 
 class Not:
     def __init__(self, matcher):
