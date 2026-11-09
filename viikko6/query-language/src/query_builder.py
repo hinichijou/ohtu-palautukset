@@ -6,7 +6,7 @@ class QueryBuilder:
 
     def build(self):
         if not self._operations:
-            return All(*self._operations)
+            return All()
 
         return And(*self._operations)
 

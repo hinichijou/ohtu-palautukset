@@ -16,10 +16,10 @@ def main():
     query = QueryBuilder()
 
     # Print all players
-    # matcher = query.build()
-    # print_matches(stats, matcher)
+    matcher = query.build()
+    print_matches(stats, matcher)
 
-    # print()
+    print()
 
     # Print all players from NYR
     matcher = query.plays_in("NYR").build()
