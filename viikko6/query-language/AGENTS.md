@@ -3,7 +3,7 @@
 ## Project
 
 - This is a dependency-free Python 3.14 project. Use the version in `.python-version` and manage execution with `uv`.
-- Source files live directly under `src/`; there is no package build step or test suite in this repository.
+- Source files live directly under `src/`; tests live under `src/tests/`, and there is no package build step.
 - Keep changes focused on the query-language exercise and preserve the existing simple module layout.
 
 ## Architecture
@@ -18,8 +18,9 @@
 ## Development
 
 - Run the example with `uv run python src/index.py`. It requires network access to the NHL statistics URL in `src/index.py`.
+- Run the unit tests with `uv run python -m unittest discover -s src/tests -p "test_*.py"`. Tests use mock `Player` data and a stub `PlayerReader`; they must not fetch network data.
 - Run a syntax check with `uv run python -m compileall src`.
-- There are currently no automated tests, lint settings, or formatting settings. Add focused tests before making broad behavior changes.
+- There are no lint settings or formatting settings. Add focused tests before making broad behavior changes.
 - Keep public method names and the matcher protocol stable unless the task explicitly asks for an API change.
 - Prefer the standard library and existing abstractions. Avoid adding dependencies for this small exercise.
 
