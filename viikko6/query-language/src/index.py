@@ -51,8 +51,5 @@ def main():
     matcher = parse("team = PHI and assists >= 10 and goals < 10 or team = EDM and points >= 50")
     print_matches(stats, matcher)
 
-    matcher = parse("points = 50")
-    print_matches(stats, matcher)
-
 if __name__ == "__main__":
     main()
